@@ -11,30 +11,71 @@ from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from streamlit_extras.let_it_rain import rain
-# Function to set a background image
+# Function to set the cover page background
 def set_background(png_file):
     with open(png_file, "rb") as f:
         data = f.read()
     encoded = base64.b64encode(data).decode()
     page_bg_img = f"""
     <style>
-    .stApp {{
-        background-image: url("data:image/png;base64,{encoded}");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-position: center center;
+    [data-testid="stAppViewContainer"] > .main {{
+    background-image: url("data:image/png;base64,{encoded}");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
     }}
     </style>
     """
     st.markdown(page_bg_img, unsafe_allow_html=True)
 
-# Set the background image
-set_background('titanic_3.png')
+# Function to set the side bar background
+def set_sidebar_background(png_file):
+    with open(png_file, "rb") as f:
+        data = f.read()
+    encoded = base64.b64encode(data).decode()
+    sidebar_bg_img = f"""
+    <style>
+    [data-testid="stSidebar"] > div:first-child {{
+        background-image: url("data:image/png;base64,{encoded}");
+        background-size: 85%;
+        background-position: middle;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
+    </style>
+    """
+    st.markdown(sidebar_bg_img, unsafe_allow_html=True)
 
+# Set the initial sidebar background image
+set_sidebar_background('3.png')
+
+# Function to set main page background on button click
+def set_background2(png_file):
+    with open(png_file, "rb") as f:
+        data = f.read()
+    encoded = base64.b64encode(data).decode()
+    sidebar2_bg_img = f"""
+    <style>
+    [data-testid="stAppViewContainer"] > .main {{
+        background-image: url("data:image/png;base64,{encoded}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
+    </style>
+    """
+    st.markdown(sidebar2_bg_img, unsafe_allow_html=True)
 # Initialize session state
 if 'page' not in st.session_state:
     st.session_state.page = 'cover'
+
+# Set the main page background based on the session state
+if st.session_state.page == 'cover':
+    set_background('titanic_3.png')
+else:
+    set_background2('2.png')
 
 # Function to hide the sidebar
 def hide_sidebar():
@@ -67,10 +108,9 @@ def cover_page():
 def load_data():
     Titanic = pd.read_csv('Titanic.csv')
     return Titanic
-
 # Function to display the main app content
 def main_app():
-    st.title("Hi👋 we're from group 9 class Business Class𓍢ִ໋🌷͙֒")
+    st.title("Hi👋 we're from group 9 class Business Class🌷֒")
     st.text('This is a web app to allow exploration of Titanic Survival🚢')
 
     # Load the dataset if it's not already loaded
@@ -101,6 +141,7 @@ def main_app():
 
 # Function for Data Explorer
 def eda(df):
+        # Add other column descriptions as needed
     explore_dataset_option = st.checkbox("🔎Explore Dataset")
 
     if explore_dataset_option:
@@ -161,6 +202,24 @@ def eda(df):
                 new_df = raw_data_selection[selected_columns]
                 st.dataframe(new_df)
 
+            # Checkbox to show variable meanings
+            show_variable_meanings_option = st.checkbox('Show Variable Meanings')
+            if show_variable_meanings_option:
+                st.text("Variable Meanings")
+                st.markdown("""
+                # Explain the meaning of features in Titanic Dataset🧐:
+                - **Age:** Age of the passenger
+                - **Parch:** Number of parents/children aboard the Titanic
+                - **SibSp:** Number of siblings/spouses aboard the Titanic
+                - **Survived:** Survival (0 = No, 1 = Yes)
+                - **Pclass:** Passenger class (1 = 1st, 2 = 2nd, 3 = 3rd)
+                - **Name:** Name of the passenger
+                - **Sex:** Sex of the passenger
+                - **Ticket:** Ticket number
+                - **Fare:** Fare paid for the ticket
+                - **Cabin:** Cabin number
+                - **Embarked:** Port of embarkation (C = Cherbourg; Q = Queenstown; S = Southampton)
+                """)
 # Function for Features Distribution
 def visualize(df):
     button_labels = [
@@ -209,7 +268,7 @@ def visualize_survival_distribution(df):
         unsafe_allow_html=True
     )
     st.plotly_chart(fig_survival)
-    
+    st.write('💬The sunburst chart visualizes the survival distribution of Titanic passengers, segmented by gender and starting places. Males exhibit a higher mortality rate, particularly those coming from Southampton. In contrast, females demonstrate a higher survival rate, especially those coming from Southampton.')
 
 def visualize_age_distribution(df):
     st.subheader('Age Distribution')
@@ -232,7 +291,6 @@ def visualize_age_distribution(df):
     paper_bgcolor='rgba(0,0,0,0)',
     font=dict(color='white')
     )
-
     # Set overall app background
     st.markdown(
         """
@@ -245,6 +303,7 @@ def visualize_age_distribution(df):
         unsafe_allow_html=True
     )
     st.plotly_chart(fig_age)
+    st.write('💬This histogram graph represents age distribution with a prominent peak around 20 to 30 years old. Besides that, in this journey, most people come from the adolescents to middle age.')
 def visualize_family_size_distribution(df):
     st.subheader('Family Size Distribution')
 
@@ -301,6 +360,7 @@ def visualize_family_size_distribution(df):
 
     # Displaying the plotly chart
     st.plotly_chart(fig_family_size)
+    st.write('💬The bar chart illustrates the number of family members including alone, small houses (under 4 members) and large families affecting the people’s survival proportions. It is clear that there is a tendency for one person to choose traveling rather than the large families.')
 def visualize_class_distribution(df):
     # Add checkboxes for filtering by Sex
     selected_sex = st.multiselect("Select Sex", df['Sex'].unique(), default=df['Sex'].unique())
@@ -349,6 +409,7 @@ def visualize_class_distribution(df):
     )
 
     st.plotly_chart(fig)
+    st.write('💬The box plot illustrates the age distribution and the gender of passengers across three ticket classes. First-class passengers have the widest age range and higher median. Second-class passengers show a high second median age.Third-class passengers, with a lowest median age.')
 
 # Titanic Prediction Function
 def predict_survival():
@@ -522,10 +583,6 @@ st.markdown("""
 <style>
 body {
     font-family: 'Arial', sans-serif;
-}
-/* Sidebar gradient background */
-[data-testid="stSidebar"] {
-    background: linear-gradient(to bottom right, #000000, #1A6492); /* Gradient from dark navy to blue */
 }
 /* Sidebar text color */
 [data-testid="stSidebar"] .css-1lcbmhc, [data-testid="stSidebar"] .css-145kmo2 {
