@@ -102,7 +102,25 @@ def cover_page():
     if st.button("Let's get started"):
         st.session_state.page = 'main'
         st.experimental_rerun()
-
+# Function to inject dark theme CSS
+def set_dark_theme():
+    dark_theme_css = """
+    <style>
+    body {
+        color: white;
+        background-color: #1e1e1e;
+    }
+    .css-1aumxhk, .css-15tx938, .css-1kyxreq, .css-1e3in70 {
+        background-color: #333 !important;
+    }
+    .css-1aumxhk .stButton button {
+        background-color: #444;
+        color: white;
+    }
+    </style>
+    """
+    st.markdown(dark_theme_css, unsafe_allow_html=True)
+    
 # Load the Titanic dataset from the workspace directory
 @st.cache_data  # Cache the dataset for improved performance
 def load_data():
