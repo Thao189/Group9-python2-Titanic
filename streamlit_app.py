@@ -95,7 +95,7 @@ def cover_page():
     st.markdown("""
         <p style='color:white'>
        Welcome to our exploration trip on the Titanic dataset based on the well-known true Titanic shipwreck in 1992. Here you find a lot of necessary information you need to know about the true history of the previous decades, ranging from the survival ability and distribution of their age, gender, ticket class, and the station they are traveling to. The aim of this report is to delve into applying Project 2 in Python 2 from the Business IT Course . Moreover, our data will offer you descriptive insights about this crucial historical event and be more empathetic with it. Our report belongs to Group 9 on Thursday morning guided and supported positively by Mr. Do Duc Tan. Finally, we are curious about the crucial event in the human trove of knowledge about history and we will highlight it in detail. 
-       
+        <p style='color:white'>
        Particularly, the sinking of the Titanic is renowned as one of the most infamous disasters in history. On April 15, 1912, during its voyage, the supposedly unsinkable RMS Titanic sank after hitting an iceberg. Tragically, due to insufficient lifeboats, 1502 out of 2224 passengers and crew perished. Survival appeared to be influenced by certain factors, representing that some demographics were more likely to survive than others.
         </p>
     """, unsafe_allow_html=True)
