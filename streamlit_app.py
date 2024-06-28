@@ -595,15 +595,3 @@ if st.session_state.page == 'cover':
     cover_page()
 else:
     main_app()
-
-# Additional styling if needed
-st.markdown("""
-<style>
-body {
-    font-family: 'Arial', sans-serif;
-}
-/* Sidebar text color */
-[data-testid="stSidebar"] .css-1lcbmhc, [data-testid="stSidebar"] .css-145kmo2 {
-    color: #FFFFFF;  /* Light text color */}
-    </style>
-""", unsafe_allow_html=True)
