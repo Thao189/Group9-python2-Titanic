@@ -1,0 +1,7 @@
+[client]
+showErrorDetails = true
+
+[theme]
+base = "dark"
+textColor="#FFFFFF"
+font="sans serif"
