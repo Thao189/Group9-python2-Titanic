@@ -95,31 +95,13 @@ def cover_page():
     st.markdown("""
         <p style='color:white'>
        Welcome to our exploration trip on the Titanic dataset based on the well-known true Titanic shipwreck in 1992. Here you find a lot of necessary information you need to know about the true history of the previous decades, ranging from the survival ability and distribution of their age, gender, ticket class, and the station they are traveling to. The aim of this report is to delve into applying Project 2 in Python 2 from the Business IT Course . Moreover, our data will offer you descriptive insights about this crucial historical event and be more empathetic with it. Our report belongs to Group 9 on Thursday morning guided and supported positively by Mr. Do Duc Tan. Finally, we are curious about the crucial event in the human trove of knowledge about history and we will highlight it in detail. 
-        <p style='color:white'>
+       <p style='color:white'>
        Particularly, the sinking of the Titanic is renowned as one of the most infamous disasters in history. On April 15, 1912, during its voyage, the supposedly unsinkable RMS Titanic sank after hitting an iceberg. Tragically, due to insufficient lifeboats, 1502 out of 2224 passengers and crew perished. Survival appeared to be influenced by certain factors, representing that some demographics were more likely to survive than others.
         </p>
     """, unsafe_allow_html=True)
     if st.button("Let's get started"):
         st.session_state.page = 'main'
         st.experimental_rerun()
-# Function to inject dark theme CSS
-def set_dark_theme():
-    dark_theme_css = """
-    <style>
-    body {
-        color: white;
-        background-color: #1e1e1e;
-    }
-    .css-1aumxhk, .css-15tx938, .css-1kyxreq, .css-1e3in70 {
-        background-color: #333 !important;
-    }
-    .css-1aumxhk .stButton button {
-        background-color: #444;
-        color: white;
-    }
-    </style>
-    """
-    st.markdown(dark_theme_css, unsafe_allow_html=True)
     
 # Load the Titanic dataset from the workspace directory
 @st.cache_data  # Cache the dataset for improved performance
@@ -148,10 +130,10 @@ def main_app():
         animation_length="2",
         )
     elif tabs == '🔎Data Explorer':
-        st.subheader("Explore Dataset")
+        st.subheader("🗂️Explore Dataset")
         eda(Titanic)
     elif tabs == '📊Features Distribution':
-        st.subheader('Titanic Dataset Analysis')
+        st.subheader('Titanic Dataset Analysis🎯')
         visualize(Titanic)
     elif tabs == '🌊Titanic Survival Prediction':
         st.header('Would you have survived the Titanic?🚢')
@@ -238,7 +220,8 @@ def eda(df):
                 - **Cabin:** Cabin number
                 - **Embarked:** Port of embarkation (C = Cherbourg; Q = Queenstown; S = Southampton)
                 """)
-# Function for Features Distribution
+
+# Function for Visualizations
 def visualize(df):
     button_labels = [
         'Survival Distribution', 
@@ -247,7 +230,8 @@ def visualize(df):
         'Class Distribution'
     ]
 
-    selected_chart = st.radio('Select Chart', button_labels, index=0)
+    # Use st.sidebar.radio to create a navigation in the sidebar
+    selected_chart = st.sidebar.radio('Select Chart📌', button_labels, index=0)
 
     if selected_chart == 'Survival Distribution':
         visualize_survival_distribution(df)
@@ -322,6 +306,7 @@ def visualize_age_distribution(df):
     )
     st.plotly_chart(fig_age)
     st.write('💬This histogram graph represents age distribution with a prominent peak around 20 to 30 years old. Besides that, in this journey, most people come from the adolescents to middle age.')
+
 def visualize_family_size_distribution(df):
     st.subheader('Family Size Distribution')
 
@@ -332,10 +317,10 @@ def visualize_family_size_distribution(df):
     df['FamilyCategory'] = df['FamilySize'].apply(lambda x: 'Alone' if x == 1 else ('Small Family' if x <= 4 else 'Large Family'))
 
     # Sidebar checkboxes for filtering by family size categories
-    st.sidebar.subheader('Filter by Family Size')
-    alone_checkbox = st.sidebar.checkbox('Alone', value=True)
-    small_family_checkbox = st.sidebar.checkbox('Small Family', value=True)
-    large_family_checkbox = st.sidebar.checkbox('Large Family', value=True)
+    st.subheader('Filter by Family Size')
+    alone_checkbox = st.checkbox('Alone', value=True)
+    small_family_checkbox = st.checkbox('Small Family', value=True)
+    large_family_checkbox = st.checkbox('Large Family', value=True)
 
     # Filter the dataframe based on selected checkboxes
     selected_categories = []
@@ -379,6 +364,7 @@ def visualize_family_size_distribution(df):
     # Displaying the plotly chart
     st.plotly_chart(fig_family_size)
     st.write('💬The bar chart illustrates the number of family members including alone, small houses (under 4 members) and large families affecting the people’s survival proportions. It is clear that there is a tendency for one person to choose traveling rather than the large families.')
+
 def visualize_class_distribution(df):
     # Add checkboxes for filtering by Sex
     selected_sex = st.multiselect("Select Sex", df['Sex'].unique(), default=df['Sex'].unique())
@@ -428,6 +414,12 @@ def visualize_class_distribution(df):
 
     st.plotly_chart(fig)
     st.write('💬The box plot illustrates the age distribution and the gender of passengers across three ticket classes. First-class passengers have the widest age range and higher median. Second-class passengers show a high second median age.Third-class passengers, with a lowest median age.')
+
+# Example usage
+# Load your dataframe here
+# df = pd.read_csv('your_dataset.csv')
+
+# visualize(df)
 
 # Titanic Prediction Function
 def predict_survival():
@@ -554,8 +546,10 @@ def predict_survival():
             st.image('image_copy_7.png')
         elif state == 1:
             st.warning("Hey... I hope you know how to swim, maybe you have to do it! 🏊‍♂️")
+            st.image('5.jpg')
         elif state == 2:
             st.info("Well done! You are on the right track, but don't get lost! 💪")
+            st.image('4.jpg')
         else:
             st.success('Congratulations! You can rest assured, you will be fine! 🎉')
             st.image('image_copy_6.png')
@@ -595,3 +589,17 @@ if st.session_state.page == 'cover':
     cover_page()
 else:
     main_app()
+
+import streamlit as st
+
+# Additional styling if needed
+st.markdown("""
+<style>
+body {
+    font-family: 'Arial', sans-serif;
+}
+/* Sidebar text color */
+[data-testid="stSidebar"] .css-1lcbmhc, [data-testid="stSidebar"] .css-145kmo2 {
+    color: white;  /* Light text color */}
+    </style>
+""", unsafe_allow_html=True)
