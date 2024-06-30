@@ -5,9 +5,9 @@ This data set is provided by Kaggle.com, the link will be placed below for you t
 https://www.kaggle.com/datasets/yasserh/titanic-dataset/discussion?sort=hotness
 
 App introduces:
-    +) About our app🎯: This app will provide not only a brief but also a comprehensive summary of the Titanic's survival statistics for readers. In addition, the data also offers an overview of the size, distribution, and demographics of the passengers on the Titanic
++) About our app🎯: This app will provide not only a brief but also a comprehensive summary of the Titanic's survival statistics for readers. In addition, the data also offers an overview of the size, distribution, and demographics of the passengers on the Titanic
 
-    +) Our app includes 3 parts:
++) Our app includes 3 parts:
 The Data Explorer :
 -> This will be the key 🔑 for those who want to unlock a deeper understanding of our dataset, from its features to the underlying meanings of each component.
 
